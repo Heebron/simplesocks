@@ -77,7 +77,7 @@ func main() {
 
 	go http.ListenAndServe(fmt.Sprintf("%s:%d", config.WADServer.Bind, config.WADServer.Port), nil)
 
-	log.Println("supersocks WPAD listening on ", fmt.Sprintf("%s:%d", config.WADServer.Bind, config.WADServer.Port))
+	log.Println("simplesocks WPAD listening on ", fmt.Sprintf("%s:%d", config.WADServer.Bind, config.WADServer.Port))
 
 	ln, err := net.Listen("tcp", fmt.Sprintf("%s:%d", config.SOCKSServer.Bind, config.SOCKSServer.Port))
 
@@ -85,7 +85,7 @@ func main() {
 		log.Fatal(err)
 	}
 
-	log.Println("supersocks SOCKS listening on ", ln.Addr())
+	log.Println("simplesocks SOCKSv5 listening on ", ln.Addr())
 	for {
 		var conn net.Conn
 		conn, err = ln.Accept()
