@@ -1,0 +1,18 @@
+Blacklist:
+  - match: [".*"]
+    block:
+      - "sex.com"
+      - "redtube.com"
+      - "youporn.com"
+      - "pornub.com"
+  - match: ["galago","galago.thepratts.info"]
+    block:
+      - "facebook.com"
+
+SOCKS Server:
+  bind: "0.0.0.0"
+  port: 3128
+
+WAD Server:
+  bind: "0.0.0.0"
+  port: 3129
