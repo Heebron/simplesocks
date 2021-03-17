@@ -249,10 +249,8 @@ func handleConnection(conn net.Conn) {
 
 		// Tunnel established
 
-		block := make(chan bool, 2)
-		go transfer(conn, destConn, block)
-		go transfer(destConn, conn, block)
-		<-block // Wait for either to finish
+		go transfer(conn, destConn)
+		transfer(destConn, conn)
 		log.Printf("INFO: %s <- %s:%d", clientName, destHost, destPort)
 		return
 
@@ -298,9 +296,10 @@ func toIpAndPort(addr net.Addr) (net.IP, uint16, error) {
 	return net.ParseIP(addr.String()[:idx]), uint16(p), nil
 }
 
-func transfer(destination io.WriteCloser, source io.ReadCloser, n chan<- bool) {
+func transfer(destination io.WriteCloser, source io.ReadCloser) {
 	io.Copy(destination, source)
-	n <- true
+	destination.Close()
+	source.Close()
 }
 
 func readN(conn net.Conn, buffer []byte, expected int) error {
